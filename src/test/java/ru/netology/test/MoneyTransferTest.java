@@ -22,10 +22,21 @@ public class MoneyTransferTest {
         verificationPage.validVerify(verificationCode);
     }
 
+
+    @Test
+    void shouldNoTransferMoreThanBalanceOfCard() {
+        val dashboardPage = new DashboardPage();
+        val amount = 1000;
+        val transferPage = dashboardPage.pushFirstCard();
+        val cardInfo = DataHelper.getSecondCardInfo();
+        transferPage.transferCard(cardInfo, amount);
+        transferPage.getError();
+    }
+
     @Test
     void shouldTransferFromFirstToSecond() {
         val dashboardPage = new DashboardPage();
-        val amount = 1000;
+        val amount = 10000;
         val balanceOfFirstCardBefore = dashboardPage.getCardBalanceFirstCard();
         val balanceOfSecondCardBefore = dashboardPage.getCardBalanceSecondCard();
         val transferPage = dashboardPage.pushSecondCard();
@@ -37,15 +48,5 @@ public class MoneyTransferTest {
         val balanceOfSecondCardAfter = dashboardPage.getCardBalanceSecondCard();
         assertEquals(balanceAfterTransactionFirstCard, balanceOfFirstCardAfter);
         assertEquals(balanceAfterTransactionSecondCard, balanceOfSecondCardAfter);
-    }
-
-    @Test
-    void shouldNoTransferMoreThanBalanceOfCard() {
-        val dashboardPage = new DashboardPage();
-        val amount = 50500;
-        val transferPage = dashboardPage.pushFirstCard();
-        val cardInfo = DataHelper.getSecondCardInfo();
-        transferPage.transferCard(cardInfo, amount);
-        transferPage.getError();
     }
 }
