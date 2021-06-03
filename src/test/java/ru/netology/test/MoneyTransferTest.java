@@ -26,7 +26,7 @@ public class MoneyTransferTest {
     @Test
     void shouldNoTransferMoreThanBalanceOfCard() {
         val dashboardPage = new DashboardPage();
-        val amount = 1000;
+        val amount = 120000;
         val transferPage = dashboardPage.pushFirstCard();
         val cardInfo = DataHelper.getSecondCardInfo();
         transferPage.transferCard(cardInfo, amount);
